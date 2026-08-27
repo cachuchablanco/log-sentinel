@@ -1,0 +1,76 @@
+# Log Sentinel detection rules.
+# All thresholds are tuned for the synthetic samples/ corpus; tighten for production.
+
+rules:
+  - id: AUTH-001
+    name: brute_force
+    detector: brute_force
+    enabled: true
+    severity: high
+    mitre:
+      tactic: Credential Access
+      technique_id: T1110
+      technique: Brute Force
+    params:
+      fail_threshold: 8
+      window_minutes: 15
+      require_success: true
+
+  - id: AUTH-002
+    name: impossible_travel
+    detector: impossible_travel
+    enabled: true
+    severity: high
+    mitre:
+      tactic: Initial Access
+      technique_id: T1078
+      technique: Valid Accounts
+    params:
+      max_speed_kmh: 800
+      min_distance_km: 500
+
+  - id: NET-001
+    name: port_sweep
+    detector: port_sweep
+    enabled: true
+    severity: medium
+    mitre:
+      tactic: Discovery
+      technique_id: T1046
+      technique: Network Service Discovery
+    params:
+      window_minutes: 5
+      min_unique_hosts: 12
+      min_unique_ports: 12
+
+  - id: WEB-001
+    name: web_attack
+    detector: web_attack
+    enabled: true
+    severity: high
+    mitre:
+      tactic: Initial Access
+      technique_id: T1190
+      technique: Exploit Public-Facing Application
+    params:
+      patterns:
+        - id: sqli
+          regex: '(?i)(\bunion\b.+\bselect\b|''(\s*)or(\s*)\d+=\d+|or\s+1\s*=\s*1|--\s|/\*|\bwaitfor\b\s+\bdelay\b)'
+        - id: xss
+          regex: '(?i)(<script[\s>]|javascript:|onerror\s*=|onload\s*=|<img[\s>].*onerror)'
+        - id: path_traversal
+          regex: '(?i)(\.\./|\.\.\\|/etc/passwd)'
+
+  - id: AUTH-003
+    name: after_hours_admin
+    detector: after_hours_admin
+    enabled: true
+    severity: medium
+    mitre:
+      tactic: Privilege Escalation
+      technique_id: T1078.003
+      technique: Valid Accounts — Local Accounts
+    params:
+      admin_users: [admin, root]
+      start_hour: 8
+      end_hour: 18

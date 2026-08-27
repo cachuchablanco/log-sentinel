@@ -1,0 +1,82 @@
+# Synthetic sshd log (ISO timestamps). All IPs are RFC 5737 / RFC 1918.
+# Host: jump.internal
+2026-08-26T00:07:14Z jump sshd[881]: Failed password for invalid user test from 192.0.2.88 port 44190 ssh2
+2026-08-26T00:07:16Z jump sshd[881]: Invalid user test from 192.0.2.88 port 44190
+2026-08-26T01:22:03Z jump sshd[902]: Failed password for root from 203.0.113.14 port 51002 ssh2
+2026-08-26T01:22:08Z jump sshd[902]: Failed password for root from 203.0.113.14 port 51003 ssh2
+2026-08-26T03:14:02Z jump sshd[21401]: Accepted password for admin from 198.51.100.200 port 51122 ssh2
+2026-08-26T03:14:02Z jump sshd[21401]: pam_unix(sshd:session): session opened for user admin
+2026-08-26T03:21:44Z jump sshd[21401]: Disconnected from user admin 198.51.100.200 port 51122
+2026-08-26T03:21:44Z jump sshd[21401]: pam_unix(sshd:session): session closed for user admin
+2026-08-26T07:55:11Z jump sshd[22010]: Failed password for invalid user ubuntu from 198.51.100.33 port 39011 ssh2
+2026-08-26T07:55:13Z jump sshd[22010]: Invalid user ubuntu from 198.51.100.33 port 39011
+2026-08-26T08:02:41Z jump sshd[22100]: Accepted publickey for admin from 10.0.0.8 port 40012 ssh2
+2026-08-26T08:02:41Z jump sshd[22100]: pam_unix(sshd:session): session opened for user admin
+2026-08-26T08:18:09Z jump sshd[22100]: Disconnected from user admin 10.0.0.8 port 40012
+2026-08-26T08:18:09Z jump sshd[22100]: pam_unix(sshd:session): session closed for user admin
+2026-08-26T09:12:01Z jump sshd[1022]: Accepted password for alice from 10.0.2.5 port 49811 ssh2
+2026-08-26T09:12:01Z jump sshd[1022]: pam_unix(sshd:session): session opened for user alice
+2026-08-26T09:18:22Z jump sshd[1104]: Accepted publickey for bob from 10.0.2.8 port 50001 ssh2
+2026-08-26T09:18:22Z jump sshd[1104]: pam_unix(sshd:session): session opened for user bob
+2026-08-26T09:22:07Z jump sshd[1188]: Accepted password for carol from 192.0.2.10 port 44119 ssh2
+2026-08-26T09:22:07Z jump sshd[1188]: pam_unix(sshd:session): session opened for user carol
+2026-08-26T09:31:55Z jump sshd[1201]: Failed password for dave from 10.0.2.12 port 50220 ssh2
+2026-08-26T09:32:02Z jump sshd[1201]: Accepted password for dave from 10.0.2.12 port 50221 ssh2
+2026-08-26T09:32:02Z jump sshd[1201]: pam_unix(sshd:session): session opened for user dave
+2026-08-26T09:44:18Z jump sshd[1022]: Disconnected from user alice 10.0.2.5 port 49811
+2026-08-26T09:44:18Z jump sshd[1022]: pam_unix(sshd:session): session closed for user alice
+2026-08-26T10:05:33Z jump sshd[1308]: Failed password for invalid user oracle from 203.0.113.14 port 51190 ssh2
+2026-08-26T10:05:40Z jump sshd[1308]: Failed password for invalid user postgres from 203.0.113.14 port 51191 ssh2
+2026-08-26T10:11:02Z jump sshd[1188]: Disconnected from user carol 192.0.2.10 port 44119
+2026-08-26T10:11:02Z jump sshd[1188]: pam_unix(sshd:session): session closed for user carol
+2026-08-26T10:40:15Z jump sshd[1104]: Disconnected from user bob 10.0.2.8 port 50001
+2026-08-26T10:40:15Z jump sshd[1104]: pam_unix(sshd:session): session closed for user bob
+2026-08-26T11:02:44Z jump sshd[1402]: Accepted password for alice from 10.0.2.5 port 49901 ssh2
+2026-08-26T11:02:44Z jump sshd[1402]: pam_unix(sshd:session): session opened for user alice
+2026-08-26T11:16:09Z jump sshd[1402]: Disconnected from user alice 10.0.2.5 port 49901
+2026-08-26T11:16:09Z jump sshd[1402]: pam_unix(sshd:session): session closed for user alice
+2026-08-26T11:40:02Z jump sshd[5510]: Failed password for alice from 203.0.113.50 port 60001 ssh2
+2026-08-26T11:40:18Z jump sshd[5511]: Failed password for alice from 203.0.113.50 port 60002 ssh2
+2026-08-26T11:40:33Z jump sshd[5512]: Failed password for alice from 203.0.113.50 port 60003 ssh2
+2026-08-26T11:40:51Z jump sshd[5513]: Failed password for alice from 203.0.113.50 port 60004 ssh2
+2026-08-26T11:41:08Z jump sshd[5514]: Failed password for alice from 203.0.113.50 port 60005 ssh2
+2026-08-26T11:41:22Z jump sshd[5515]: Failed password for alice from 203.0.113.50 port 60006 ssh2
+2026-08-26T11:41:39Z jump sshd[5516]: Failed password for alice from 203.0.113.50 port 60007 ssh2
+2026-08-26T11:41:55Z jump sshd[5517]: Failed password for alice from 203.0.113.50 port 60008 ssh2
+2026-08-26T11:42:14Z jump sshd[5518]: Failed password for alice from 203.0.113.50 port 60009 ssh2
+2026-08-26T11:42:31Z jump sshd[5519]: Failed password for alice from 203.0.113.50 port 60010 ssh2
+2026-08-26T11:42:48Z jump sshd[5520]: Failed password for alice from 203.0.113.50 port 60011 ssh2
+2026-08-26T11:43:05Z jump sshd[5521]: Failed password for alice from 203.0.113.50 port 60012 ssh2
+2026-08-26T11:43:19Z jump sshd[5522]: Accepted password for alice from 203.0.113.50 port 60013 ssh2
+2026-08-26T11:43:19Z jump sshd[5522]: pam_unix(sshd:session): session opened for user alice
+2026-08-26T11:51:02Z jump sshd[5522]: Disconnected from user alice 203.0.113.50 port 60013
+2026-08-26T11:51:02Z jump sshd[5522]: pam_unix(sshd:session): session closed for user alice
+2026-08-26T12:08:44Z jump sshd[1601]: Accepted password for dave from 10.0.2.12 port 50330 ssh2
+2026-08-26T12:08:44Z jump sshd[1601]: pam_unix(sshd:session): session opened for user dave
+2026-08-26T12:33:10Z jump sshd[1601]: Disconnected from user dave 10.0.2.12 port 50330
+2026-08-26T12:33:10Z jump sshd[1601]: pam_unix(sshd:session): session closed for user dave
+2026-08-26T13:15:27Z jump sshd[1704]: Failed password for carol from 192.0.2.10 port 44200 ssh2
+2026-08-26T13:15:33Z jump sshd[1704]: Accepted password for carol from 192.0.2.10 port 44201 ssh2
+2026-08-26T13:15:33Z jump sshd[1704]: pam_unix(sshd:session): session opened for user carol
+2026-08-26T13:48:02Z jump sshd[1704]: Disconnected from user carol 192.0.2.10 port 44201
+2026-08-26T13:48:02Z jump sshd[1704]: pam_unix(sshd:session): session closed for user carol
+2026-08-26T14:02:11Z jump sshd[1801]: Accepted password for bob from 198.51.100.10 port 44881 ssh2
+2026-08-26T14:02:11Z jump sshd[1801]: pam_unix(sshd:session): session opened for user bob
+2026-08-26T14:24:44Z jump sshd[1910]: Accepted publickey for bob from 203.0.113.80 port 22014 ssh2
+2026-08-26T14:24:44Z jump sshd[1910]: pam_unix(sshd:session): session opened for user bob
+2026-08-26T14:55:01Z jump sshd[1801]: Disconnected from user bob 198.51.100.10 port 44881
+2026-08-26T14:55:01Z jump sshd[1801]: pam_unix(sshd:session): session closed for user bob
+2026-08-26T15:10:22Z jump sshd[1910]: Disconnected from user bob 203.0.113.80 port 22014
+2026-08-26T15:10:22Z jump sshd[1910]: pam_unix(sshd:session): session closed for user bob
+2026-08-26T16:04:18Z jump sshd[2002]: Accepted password for alice from 10.0.2.5 port 50440 ssh2
+2026-08-26T16:04:18Z jump sshd[2002]: pam_unix(sshd:session): session opened for user alice
+2026-08-26T16:41:09Z jump sshd[2002]: Disconnected from user alice 10.0.2.5 port 50440
+2026-08-26T16:41:09Z jump sshd[2002]: pam_unix(sshd:session): session closed for user alice
+2026-08-26T17:22:55Z jump sshd[2108]: Failed password for invalid user pi from 192.0.2.88 port 39090 ssh2
+2026-08-26T18:03:12Z jump sshd[2119]: Accepted publickey for dave from 10.0.2.12 port 50501 ssh2
+2026-08-26T18:03:12Z jump sshd[2119]: pam_unix(sshd:session): session opened for user dave
+2026-08-26T18:40:00Z jump sshd[2119]: Disconnected from user dave 10.0.2.12 port 50501
+2026-08-26T18:40:00Z jump sshd[2119]: pam_unix(sshd:session): session closed for user dave
+2026-08-26T21:11:43Z jump sshd[2300]: Failed password for root from 198.51.100.33 port 39100 ssh2
+2026-08-26T21:11:50Z jump sshd[2300]: Failed password for root from 198.51.100.33 port 39101 ssh2
+2026-08-26T22:04:07Z jump sshd[2401]: Failed password for invalid user admin from 203.0.113.14 port 52001 ssh2
