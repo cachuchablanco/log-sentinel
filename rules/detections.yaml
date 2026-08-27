@@ -74,3 +74,17 @@ rules:
       admin_users: [admin, root]
       start_hour: 8
       end_hour: 18
+
+  - id: AUTH-004
+    name: password_spray
+    detector: password_spray
+    enabled: true
+    severity: high
+    mitre:
+      tactic: Credential Access
+      technique_id: T1110.003
+      technique: Password Spraying
+    params:
+      min_users: 8
+      max_fails_per_user: 3
+      window_minutes: 15

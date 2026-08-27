@@ -20,7 +20,7 @@ What I would say next:
 - The markdown report is the point. Junior SOC is writing, not collecting tools
 - This is not Splunk. If they ask why I did not just use Elastic, the answer is: I wanted something I can walk line by line
 
-If they open `detectors.py`, I can talk brute-force, impossible travel, and why after-hours admin is medium not high.
+If they open `detectors.py`, I can talk brute-force vs password spray (AUTH-001 vs AUTH-004), impossible travel, and why after-hours admin is medium not high. Spray is one IP, many usernames, few tries each. Brute force is the opposite.
 
 
 ## Architecture
@@ -45,6 +45,7 @@ No database, no agents, no live scanners. Detection of already-collected logs on
 | AUTH-001 | brute_force | Many SSH failures then a success for the same user/IP | T1110 Brute Force |
 | AUTH-002 | impossible_travel | Two successes for one user from distant geos at impossible speed | T1078 Valid Accounts |
 | AUTH-003 | after_hours_admin | Successful login by `admin`/`root` outside 08:00–18:00 UTC | T1078.003 Valid Accounts — Local |
+| AUTH-004 | password_spray | One IP, many usernames, few SSH failures each | T1110.003 Password Spraying |
 | NET-001 | port_sweep | Many distinct destinations (or ports) from one source in a short window | T1046 Network Service Discovery |
 | WEB-001 | web_attack | SQLi / XSS / path-traversal *strings in access logs* | T1190 Exploit Public-Facing Application |
 
@@ -72,7 +73,7 @@ Artifacts land in `out/`:
 
 ```text
 Log Sentinel — analyzing samples
-  parsed  176 events  (auth=80, firewall=53, web=43)
+  parsed  188 events  (auth=92, firewall=53, web=43)
 
 Detections
   HIGH  WEB-001   web_attack              203.0.113.50
@@ -81,17 +82,19 @@ Detections
         SSH brute-force against alice from 203.0.113.50
   HIGH  AUTH-002  impossible_travel       bob @ 203.0.113.80
         Impossible travel for bob: New York → Tokyo
+  HIGH  AUTH-004  password_spray          203.0.113.91
+        SSH password spray from 203.0.113.91
   MED   AUTH-003  after_hours_admin       admin @ 198.51.100.200
         After-hours admin login: admin from 198.51.100.200
   MED   NET-001   port_sweep              198.51.100.77
         Horizontal scan from 198.51.100.77 (20 hosts)
 
-Wrote 5 alerts → out/alerts.json
+Wrote 6 alerts → out/alerts.json
 Wrote incident report → out/incident_report.md
   primary case: SSH brute-force against alice from 203.0.113.50
 ```
 
-(Exact event counts may shift slightly if samples are edited; all five rule IDs must appear.)
+(Exact event counts may shift slightly if samples are edited; all six rule IDs must appear.)
 
 ## Case walkthrough — `203.0.113.50` vs `alice`
 

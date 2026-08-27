@@ -39,6 +39,11 @@ Campaign-style sequence used as the primary incident in `out/incident_report.md`
 - **03:14** `Accepted password for admin` from `198.51.100.200` (Frankfurt, DE). Business hours in rules: 08:00–18:00 UTC.
 - Contrast: `admin` also logs in at **08:02** from `10.0.0.8` (internal, in-hours) — that row must **not** fire this rule.
 
+### 5. Password spray — `203.0.113.91` (AUTH-004)
+
+- **19:02–19:03** one failed SSH each for 12 common usernames (`root`, `admin`, `ubuntu`, …) from `203.0.113.91`.
+- Must **not** fire AUTH-001 (brute force is many fails against one user). Spray is many users, few tries each.
+
 ## Benign noise (must not fire AUTH-001)
 
 - Internet background: 2–3 failed attempts for `root` / `test` / `ubuntu` / `oracle` from `192.0.2.88`, `203.0.113.14`, `198.51.100.33` (below the fail threshold, no success).

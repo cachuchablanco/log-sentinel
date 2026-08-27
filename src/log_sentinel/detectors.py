@@ -396,8 +396,71 @@ def detect_after_hours_admin(events: list[Event], rule: dict[str, Any]) -> list[
     return alerts
 
 
+
+def detect_password_spray(events: list[Event], rule: dict[str, Any]) -> list[Alert]:
+    """One source IP, many usernames, few failures each. Not brute force (one user, many tries)."""
+    params = rule.get("params") or {}
+    min_users = int(params.get("min_users", 8))
+    max_fails_per_user = int(params.get("max_fails_per_user", 3))
+    window = timedelta(minutes=int(params.get("window_minutes", 15)))
+
+    fails = [e for e in events if e.is_auth_failure and e.user]
+    by_ip: dict[str, list[Event]] = defaultdict(list)
+    for ev in fails:
+        by_ip[ev.src_ip].append(ev)
+
+    alerts: list[Alert] = []
+    seen_ips: set[str] = set()
+    for src_ip, group in by_ip.items():
+        group.sort(key=lambda e: e.timestamp)
+        for i, start in enumerate(group):
+            window_events = [e for e in group[i:] if e.timestamp - start.timestamp <= window]
+            counts: dict[str, int] = defaultdict(int)
+            for e in window_events:
+                counts[e.user] += 1
+            spray_users = [u for u, c in counts.items() if c <= max_fails_per_user]
+            if len(spray_users) < min_users:
+                continue
+            if src_ip in seen_ips:
+                break
+            seen_ips.add(src_ip)
+            related = [e for e in window_events if e.user in spray_users]
+            related.sort(key=lambda e: e.timestamp)
+            user_list = ", ".join(sorted(spray_users)[:12])
+            more = "" if len(spray_users) <= 12 else f" (+{len(spray_users) - 12} more)"
+            alerts.append(
+                _alert(
+                    rule,
+                    title=f"SSH password spray from {src_ip}",
+                    description=(
+                        f"{len(spray_users)} distinct usernames failed SSH from {src_ip} "
+                        f"within {int(window.total_seconds() // 60)} minutes, "
+                        f"at most {max_fails_per_user} failures per user ({user_list}{more}). "
+                        "That is a spray, not a brute-force against one account."
+                    ),
+                    events=related,
+                    src_ip=src_ip,
+                    user=None,
+                    steps=[
+                        "Do not treat this as a single locked-out user. Many accounts were probed.",
+                        "Block or rate-limit the source IP on the jump host / VPN.",
+                        "Search for any success from this IP after the spray.",
+                        "Check whether the same usernames failed from other IPs (credential stuffing follow-on).",
+                    ],
+                    extra={
+                        "user_count": len(spray_users),
+                        "users": sorted(spray_users),
+                        "max_fails_per_user": max(counts[u] for u in spray_users),
+                    },
+                )
+            )
+            break
+    return alerts
+
+
 REGISTRY: dict[str, Detector] = {
     "brute_force": detect_brute_force,
+    "password_spray": detect_password_spray,
     "impossible_travel": detect_impossible_travel,
     "port_sweep": detect_port_sweep,
     "web_attack": detect_web_attack,

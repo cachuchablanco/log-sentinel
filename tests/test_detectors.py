@@ -5,6 +5,7 @@ from datetime import timedelta
 from log_sentinel.detectors import (
     detect_after_hours_admin,
     detect_brute_force,
+    detect_password_spray,
     detect_impossible_travel,
     detect_port_sweep,
     detect_web_attack,
@@ -233,3 +234,40 @@ def test_samples_fire_every_planted_rule(samples_dir, rules_path):
 
     after = next(a for a in alerts if a.rule_id == "AUTH-003")
     assert after.user == "admin" and after.src_ip == "198.51.100.200"
+
+
+def test_password_spray_many_users_few_fails(rules_path):
+    rule = _rule(load_rules(rules_path), "AUTH-004")
+    src = "203.0.113.91"
+    users = ["root", "admin", "ubuntu", "test", "oracle", "postgres", "mysql", "ftp", "guest", "pi"]
+    events = [
+        ev(
+            timestamp=ts(19, 2, i * 3),
+            source_type="auth",
+            src_ip=src,
+            action="login_fail",
+            user=user,
+        )
+        for i, user in enumerate(users)
+    ]
+    alerts = detect_password_spray(events, rule)
+    assert len(alerts) == 1
+    assert alerts[0].src_ip == src
+    assert alerts[0].extra["user_count"] >= 8
+    assert alerts[0].mitre_technique_id == "T1110.003"
+    assert "alice" not in alerts[0].extra["users"]
+
+
+def test_password_spray_does_not_fire_on_brute_force(rules_path):
+    rule = _rule(load_rules(rules_path), "AUTH-004")
+    events = [
+        ev(
+            timestamp=ts(11, 40, i),
+            source_type="auth",
+            src_ip="203.0.113.50",
+            action="login_fail",
+            user="alice",
+        )
+        for i in range(12)
+    ]
+    assert detect_password_spray(events, rule) == []

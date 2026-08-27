@@ -16,6 +16,7 @@ def test_analyze_writes_alerts_and_report(samples_dir: Path, tmp_path: Path, cap
     assert "NET-001" in printed
     assert "AUTH-002" in printed
     assert "AUTH-003" in printed
+    assert "AUTH-004" in printed
 
     alerts_path = out / "alerts.json"
     report_path = out / "incident_report.md"
@@ -25,7 +26,7 @@ def test_analyze_writes_alerts_and_report(samples_dir: Path, tmp_path: Path, cap
     payload = json.loads(alerts_path.read_text(encoding="utf-8"))
     assert payload["alert_count"] >= 5
     rule_ids = {a["rule_id"] for a in payload["alerts"]}
-    assert {"AUTH-001", "AUTH-002", "AUTH-003", "NET-001", "WEB-001"} <= rule_ids
+    assert {"AUTH-001", "AUTH-002", "AUTH-003", "AUTH-004", "NET-001", "WEB-001"} <= rule_ids
     for alert in payload["alerts"]:
         assert "mitre_technique_id" in alert
         assert alert["evidence"]
