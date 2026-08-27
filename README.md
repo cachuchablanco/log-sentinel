@@ -8,6 +8,21 @@ Built as a portfolio piece for junior cybersecurity / SOC analyst roles. It demo
 
 Junior SOC work is mostly: read logs → recognize a pattern → write a clear alert → open a ticket with evidence and next steps. This repo packages that loop in a few hundred lines of Python you can run locally in under a minute.
 
+
+## If you ask me on a call
+
+I would not start with the architecture diagram. I would start with the planted case: `203.0.113.50` hits the web logs with attack strings, then brute-forces `alice` on SSH, then gets in. WEB-001 and AUTH-001 are the same actor. That is the ticket.
+
+What I would say next:
+
+- YAML rules plus Python detectors, so a threshold change is not a code change
+- IPs are documentation-range only. This is not a scanner. It reads logs you already have
+- The markdown report is the point. Junior SOC is writing, not collecting tools
+- This is not Splunk. If they ask why I did not just use Elastic, the answer is: I wanted something I can walk line by line
+
+If they open `detectors.py`, I can talk brute-force, impossible travel, and why after-hours admin is medium not high.
+
+
 ## Architecture
 
 ```
