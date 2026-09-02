@@ -1,4 +1,7 @@
 # Log Sentinel
+![CI](https://github.com/cachuchablanco/log-sentinel/actions/workflows/ci.yml/badge.svg)
+![License](https://img.shields.io/badge/license-MIT-blue)
+![Python](https://img.shields.io/badge/python-3.11%2B-blue)
 
 A small, recruiter-readable **mini-SIEM**: parse authentication, web, and firewall logs into a common event model, run **YAML detection rules**, and emit SOC-style **JSON alerts** plus a markdown **incident report**.
 
